@@ -35,8 +35,41 @@ add_filter( 'login_errors', function( $error ) {
 add_action('wp_head','ogfacebook_tags');
 
 function ogfacebook_tags(){
+
 	if (is_single()){
-		include('"templates/og_tpl.php");
-	};
+
+		include("templates/og_tpl.php");
+	}
 };
+
+
+add_action('admin_menu','plugin_menu');
+
+function plugin_menu(){
+	add_submenu_page(
+	        'options-general.php',
+	        'Configuração Plugin Facebook',
+	        'Plugin Facebook',
+	        'administrator',
+	        'plugin-settings',
+	        'plugin_settings_pages' );
+}
+	
+
+function plugin_settings_pages(){
+	include('templates/og_config_tpl.php');
+}
+
+
+add_action('admin_init','plugin_settings');
+
+function plugin_settings(){
+	register_setting('plugin-settings-group',
+			'nome_funcionario');
+	register_setting('plugin-settings-group',
+			'telefone_funcionario');
+	register_setting('plugin-settings-group',
+			'email_funcionario');
+}
+
 ?>
